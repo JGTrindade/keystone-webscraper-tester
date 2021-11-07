@@ -4,8 +4,12 @@
   "description": "A simple web scraper to support the testing of pages on KEG.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "JG Trindade",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "cypress-xpath": "^1.6.2",
+    "jest": "^27.3.1"
+  }
 }
