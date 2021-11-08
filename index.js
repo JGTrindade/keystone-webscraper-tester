@@ -1,49 +1,16 @@
 'use strict';
 
-import { removeURLPath } from "./helpers/functions.js";
-import Parser from "./classes/Parser.js";
-import HTMLFetcher from "./classes/HTMLFetcher.js";
+import Sitemap from "./classes/Sitemap.js";
+import Domain from "./classes/Domain.js";
 
-const parser = new Parser();
-const htmlFetcher = new HTMLFetcher();
+const sitemap = new Sitemap();
+const domain = new Domain(sitemap);
 
-// Sitemapindexes for default domains (American English).
-let defaultSiteMapIndexes = [
-    'https://www.bachelorstudies.com/sitemap.xml',
-    'https://www.masterstudies.com/sitemap.xml',
-    'https://www.phdstudies.com/sitemap.xml',
-    'https://www.lawstudies.com/sitemap.xml',
-    'https://www.mbastudies.com/sitemap.xml',
-    'https://www.healthcarestudies.com/sitemap.xml',
-    'https://www.academiccourses.com/sitemap.xml',
-    'https://www.onlinestudies.com/sitemap.xml'
-];
+let defaultSitemaps = await sitemap.getDefaultURLs();
+console.log(defaultSitemaps);
 
 // Default domains (American English).
-let defaultDomains = removeURLPath(defaultSiteMapIndexes, '/sitemap.xml');
+let defaultDomains = domain.getDefaultURLs();
 
-
-// // Loop through all domains and save the sitemaps contained in each sitemapindex.
-let defaultSiteMaps = [];
-for (const site of defaultSiteMapIndexes) {
-    defaultSiteMaps.push(await parser.parse(site));
-}
-// console.log(defaultSiteMaps);
-// console.log(defaultDomains);
-
-// All domains. TODO: remove American English.
-let l10ndomains = [];
-
-// let htmlfile = await htmlFetcher.getFile('https://www.bachelorstudies.com/');
-// console.log(htmlfile);
-
-for (let index = 0; index < defaultDomains.length; index++) {
-    let htmlfile = await htmlFetcher.getFile(defaultDomains[index]);
-    let hreflangs = htmlfile.querySelectorAll('link[hreflang]');
-    hreflangs.forEach(element => {
-        l10ndomains.push(element.getAttribute('href'));
-    });
-}
-console.log(l10ndomains);
-
-
+// All domains except American English. TODO: remove American English.
+let localizedDomains = await domain.getLocalizedDomains(defaultDomains);

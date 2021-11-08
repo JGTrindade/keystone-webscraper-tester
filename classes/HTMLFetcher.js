@@ -7,7 +7,7 @@ export default class HTMLFetcher extends Fetcher {
     const data = await response.text()
     let parser = new DOMParser()
     let HTMLFile = parser.parseFromString(data, 'text/html');
-    return HTMLFile
+    return HTMLFile;
   }
 
 }
