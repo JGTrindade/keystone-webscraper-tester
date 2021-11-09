@@ -14,7 +14,7 @@ export default class Domain {
         let sitemap = new Sitemap();
 
         for (const url of sitemap.indexes) {
-            this.#defaultURLs.push(url.split('/sitemap.xml'));
+            this.#defaultURLs.push(url.split('sitemap.xml'));
         }
     
         this.#defaultURLs.forEach(element => {
@@ -37,6 +37,8 @@ export default class Domain {
                 this.#localizedDomains.push(element.getAttribute('href'));
             });
         }
+        // Filter out American English domains.
+        this.#localizedDomains = this.#localizedDomains.filter(localizedDomain => !defaultDomains.includes(localizedDomain));
         return this.#localizedDomains;
     }
 
