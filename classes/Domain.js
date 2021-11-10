@@ -1,4 +1,3 @@
-import Sitemap from "./Sitemap.js";
 import HTMLFetcher from "./HTMLFetcher.js";
 
 export default class Domain {
@@ -11,9 +10,8 @@ export default class Domain {
     #localizedDomains = [];
 
     getDefaultURLs() {
-        let sitemap = new Sitemap();
 
-        for (const url of sitemap.indexes) {
+        for (const url of this.sitemap.defaultIndexes) {
             this.#defaultURLs.push(url.split('sitemap.xml'));
         }
     
